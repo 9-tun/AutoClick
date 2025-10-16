@@ -1,0 +1,24 @@
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.vbprojAssemblyReference.cache
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD_Click.Form1.resources
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD_Click.Resources.resources
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.vbproj.GenerateResource.cache
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.vbproj.CoreCompileInputs.cache
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.exe.config
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.exe
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.pdb
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.xml
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.exe
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.xml
+C:\Users\i0213705\source\repos\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.pdb
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.exe.config
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.exe
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.pdb
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\bin\Debug\NRCAD Click.xml
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.vbprojAssemblyReference.cache
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD_Click.Form1.resources
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD_Click.Resources.resources
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.vbproj.GenerateResource.cache
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.vbproj.CoreCompileInputs.cache
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.exe
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.xml
+D:\OneDrive - HDI\Goken\98. Temp\01. 9tun\NRCAD Click\NRCAD Click\obj\Debug\NRCAD Click.pdb
