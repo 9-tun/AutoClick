@@ -19,9 +19,19 @@ Public Class Form1
     Private Const MOUSEEVENTF_LEFTDOWN As Integer = &H2
     Private Const MOUSEEVENTF_LEFTUP As Integer = &H4
     Private keepRunning As Boolean = False
+    Dim isChromeRemoteConnected As Boolean = False
+    Dim disconnectedSince As DateTime? = Nothing
     Private WithEvents clickTimer As New Windows.Forms.Timer()
+    Private WithEvents remoteTimer As New Windows.Forms.Timer()
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        ' Auto Stop Check Box Unchecked, Related Controls are disabled.
+        chkAutoStop.Checked = False
+        txtStopDelay.Enabled = False
+        lblStopDelay.Enabled = False
+        'lblRemoteStatus.Enabled = False
+
         Dim screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
         Dim screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
 
@@ -43,6 +53,7 @@ Public Class Form1
         End If
 
         lblStatus.Text = $"Detected Screen Size: ({screenWidth}x{screenHeight})"
+        lblStatus.ForeColor = Color.Blue
 
         ' Register the hotkey (using whatever user entered)
         Dim hotKeyValue As Keys
@@ -51,6 +62,10 @@ Public Class Form1
         Else
             RegisterHotKey(Me.Handle, HOTKEY_ID, 0, Keys.F3)
         End If
+
+        'Check Remote Connection Status
+        remoteTimer.Interval = 5000   ' 5초마다 확인
+        remoteTimer.Start()
     End Sub
 
     Protected Overrides Sub WndProc(ByRef m As Message)
@@ -65,11 +80,13 @@ Public Class Form1
         keepRunning = Not keepRunning
         If keepRunning Then
             lblStatus.Text = "Running..."
+            lblStatus.ForeColor = Color.Green
             MessageBox.Show("Auto click has been turned ON.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
             clickTimer.Interval = CInt(Val(txtInterval.Text) * 1000)
             clickTimer.Start()
         Else
             lblStatus.Text = "Stopped"
+            lblStatus.ForeColor = Color.Red
             clickTimer.Stop()
             MessageBox.Show("Auto click has been turned OFF.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
@@ -98,7 +115,108 @@ Public Class Form1
         MyBase.OnFormClosed(e)
     End Sub
 
-    Private Sub txtInterval_TextChanged(sender As Object, e As EventArgs) Handles txtInterval.TextChanged
+    Private Sub remoteTimer_Tick(sender As Object, e As EventArgs) Handles remoteTimer.Tick
+        CheckRemoteStatus()
+    End Sub
+
+    Private Sub CheckRemoteStatus()
+        ' Always reset before checking
+        isChromeRemoteConnected = False
+
+
+        ' ==========[The Way I found the Chrome Remote Connection]==========
+        ' I used the command below to find connected remote control info
+        ' tasklist | find "remoting_host.exe"
+        ' It always retreive two list. 
+        ' One of them changed according to the CRD is connected. 
+        ' When Connected:   remoting_host.exe           9452 Services   0       134,036 K
+        ' When DisConnected: remoting_host.exe          9316 Services   0       38,812 K
+        ' So I used WorkingSet64 to found CRD Connection
+
+        ' How I detected the Chrome Remote Desktop connection status:
+        ' I used the following command to check if Chrome Remote Desktop is active:
+        '     tasklist | find "remoting_host.exe"
+        '
+        ' The command always returns two processes.
+        ' One of the two processes changes its memory usage depending on the connection state.
+        '
+        ' When connected:     remoting_host.exe   9452  Services   0   134,036 K
+        ' When disconnected:  remoting_host.exe   9316  Services   0    38,812 K
+        '
+        ' Therefore, I used the WorkingSet64 property to determine
+        ' whether the Chrome Remote Desktop Is currently connected.
+
+        ' Iterate all remoting_host processes
+        For Each p As Process In Process.GetProcessesByName("remoting_host")
+            ' If any process uses more than 100MB, assume connection is active
+            If p.WorkingSet64 > 100 * 1024 * 1024 Then
+                isChromeRemoteConnected = True
+                Exit For
+            End If
+        Next
+
+        If isChromeRemoteConnected Then
+            lblRemoteStatus.Text = "🔴 Remote Connected"
+            lblRemoteStatus.ForeColor = Color.Green
+            disconnectedSince = Nothing
+        Else
+            lblRemoteStatus.ForeColor = Color.Red
+
+            If chkAutoStop.Checked Then
+
+                'Record first disconnection time
+                If disconnectedSince Is Nothing And InStr(lblRemoteStatus.Text, "Remote Connected") > 0 Then
+                    disconnectedSince = DateTime.Now
+                ElseIf disconnectedSince Is Nothing Then
+                    Exit Sub
+                End If
+
+
+                ' Calculate elapsed and remaining time
+                Dim elapsed As TimeSpan = DateTime.Now - disconnectedSince.Value
+                Dim elapsedMin As Double = elapsed.TotalMinutes
+
+                ' Read stop delay (in mins)
+                Dim stopDelayMinutes As Double = 60   ' default = 60 min = 1 hour
+                If Not Double.TryParse(txtStopDelay.Text, stopDelayMinutes) Then stopDelayMinutes = 60
+
+                ' Calculate remaining time
+                Dim remainingMin As Double = Math.Max(0, stopDelayMinutes - elapsedMin)
+                Dim remainingText As String = $"{remainingMin:F0} mins left to Auto Stop"
+
+                lblRemoteStatus.Text = $"🔴 Remote Disconnected{vbCrLf}    : {remainingText}"
+
+                ' Compare with elapsed minutes
+                If elapsed.TotalMinutes >= stopDelayMinutes AndAlso keepRunning Then
+                    keepRunning = False
+                    clickTimer.Stop()
+                    lblStatus.Text = $"Stopped (Disconnected > {stopDelayMinutes} min)"
+                    lblStatus.ForeColor = Color.Red
+                End If
+
+            Else
+                lblRemoteStatus.Text = "🔴 Remote Disconnected"
+            End If
+
+        End If
 
     End Sub
+
+    Private Sub chkAutoStop_CheckedChanged(sender As Object, e As EventArgs) Handles chkAutoStop.CheckedChanged
+
+        If chkAutoStop.Checked Then
+            ' Control enable/disable by chkAutoStop
+            txtStopDelay.Enabled = True
+            lblStopDelay.Enabled = True
+
+        Else
+            txtStopDelay.Enabled = False
+            lblStopDelay.Enabled = False
+            disconnectedSince = Nothing
+
+        End If
+
+    End Sub
+
+
 End Class

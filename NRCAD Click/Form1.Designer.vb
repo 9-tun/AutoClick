@@ -31,28 +31,36 @@ Partial Class Form1
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtOnOff = New System.Windows.Forms.TextBox()
         Me.lblStatus = New System.Windows.Forms.Label()
+        Me.lblRemoteStatus = New System.Windows.Forms.Label()
+        Me.lblStopDelay = New System.Windows.Forms.Label()
+        Me.txtStopDelay = New System.Windows.Forms.TextBox()
+        Me.chkAutoStop = New System.Windows.Forms.CheckBox()
+        Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(38, 13)
+        Me.Label1.Location = New System.Drawing.Point(33, 13)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(45, 12)
+        Me.Label1.Size = New System.Drawing.Size(87, 12)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Interval"
+        Me.Label1.Text = "Interval (secs)"
         '
         'txtInterval
         '
-        Me.txtInterval.Location = New System.Drawing.Point(133, 10)
+        Me.txtInterval.Location = New System.Drawing.Point(170, 9)
         Me.txtInterval.Name = "txtInterval"
-        Me.txtInterval.Size = New System.Drawing.Size(119, 21)
+        Me.txtInterval.Size = New System.Drawing.Size(77, 21)
         Me.txtInterval.TabIndex = 1
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(38, 40)
+        Me.Label2.Location = New System.Drawing.Point(33, 40)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(73, 12)
         Me.Label2.TabIndex = 0
@@ -60,15 +68,15 @@ Partial Class Form1
         '
         'txtX
         '
-        Me.txtX.Location = New System.Drawing.Point(133, 37)
+        Me.txtX.Location = New System.Drawing.Point(170, 36)
         Me.txtX.Name = "txtX"
-        Me.txtX.Size = New System.Drawing.Size(119, 21)
+        Me.txtX.Size = New System.Drawing.Size(77, 21)
         Me.txtX.TabIndex = 1
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(38, 67)
+        Me.Label3.Location = New System.Drawing.Point(33, 67)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(73, 12)
         Me.Label3.TabIndex = 0
@@ -76,42 +84,97 @@ Partial Class Form1
         '
         'txtY
         '
-        Me.txtY.Location = New System.Drawing.Point(133, 64)
+        Me.txtY.Location = New System.Drawing.Point(170, 63)
         Me.txtY.Name = "txtY"
-        Me.txtY.Size = New System.Drawing.Size(119, 21)
+        Me.txtY.Size = New System.Drawing.Size(77, 21)
         Me.txtY.TabIndex = 1
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(38, 94)
+        Me.Label4.Location = New System.Drawing.Point(33, 94)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(42, 12)
+        Me.Label4.Size = New System.Drawing.Size(124, 12)
         Me.Label4.TabIndex = 0
-        Me.Label4.Text = "On/Off"
+        Me.Label4.Text = "On/Off Short Cut Key"
         '
         'txtOnOff
         '
-        Me.txtOnOff.Location = New System.Drawing.Point(133, 91)
+        Me.txtOnOff.Location = New System.Drawing.Point(170, 90)
         Me.txtOnOff.Name = "txtOnOff"
-        Me.txtOnOff.Size = New System.Drawing.Size(119, 21)
+        Me.txtOnOff.Size = New System.Drawing.Size(77, 21)
         Me.txtOnOff.TabIndex = 1
         Me.txtOnOff.Text = "F2"
         '
         'lblStatus
         '
         Me.lblStatus.AutoSize = True
-        Me.lblStatus.Location = New System.Drawing.Point(41, 130)
+        Me.lblStatus.Location = New System.Drawing.Point(33, 126)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(42, 12)
+        Me.lblStatus.Size = New System.Drawing.Size(92, 12)
         Me.lblStatus.TabIndex = 2
-        Me.lblStatus.Text = "Label5"
+        Me.lblStatus.Text = "Program Status"
+        '
+        'lblRemoteStatus
+        '
+        Me.lblRemoteStatus.AutoSize = True
+        Me.lblRemoteStatus.Location = New System.Drawing.Point(21, 78)
+        Me.lblRemoteStatus.Name = "lblRemoteStatus"
+        Me.lblRemoteStatus.Size = New System.Drawing.Size(87, 12)
+        Me.lblRemoteStatus.TabIndex = 2
+        Me.lblRemoteStatus.Text = "Remote Status"
+        '
+        'lblStopDelay
+        '
+        Me.lblStopDelay.AutoSize = True
+        Me.lblStopDelay.Location = New System.Drawing.Point(21, 51)
+        Me.lblStopDelay.Name = "lblStopDelay"
+        Me.lblStopDelay.Size = New System.Drawing.Size(133, 12)
+        Me.lblStopDelay.TabIndex = 0
+        Me.lblStopDelay.Text = "Auto-stop delay(mins)"
+        '
+        'txtStopDelay
+        '
+        Me.txtStopDelay.Location = New System.Drawing.Point(158, 47)
+        Me.txtStopDelay.Name = "txtStopDelay"
+        Me.txtStopDelay.Size = New System.Drawing.Size(77, 21)
+        Me.txtStopDelay.TabIndex = 1
+        Me.txtStopDelay.Text = "60"
+        '
+        'chkAutoStop
+        '
+        Me.chkAutoStop.AutoSize = True
+        Me.chkAutoStop.Location = New System.Drawing.Point(23, 20)
+        Me.chkAutoStop.Name = "chkAutoStop"
+        Me.chkAutoStop.Size = New System.Drawing.Size(121, 16)
+        Me.chkAutoStop.TabIndex = 3
+        Me.chkAutoStop.Text = "Auto-Stop On/Off"
+        Me.chkAutoStop.UseVisualStyleBackColor = True
+        '
+        'FileSystemWatcher1
+        '
+        Me.FileSystemWatcher1.EnableRaisingEvents = True
+        Me.FileSystemWatcher1.SynchronizingObject = Me
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.lblStopDelay)
+        Me.GroupBox1.Controls.Add(Me.chkAutoStop)
+        Me.GroupBox1.Controls.Add(Me.lblRemoteStatus)
+        Me.GroupBox1.Controls.Add(Me.txtStopDelay)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 156)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(260, 118)
+        Me.GroupBox1.TabIndex = 4
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Auto-Stop"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 161)
+        Me.ClientSize = New System.Drawing.Size(284, 286)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.lblStatus)
         Me.Controls.Add(Me.txtOnOff)
         Me.Controls.Add(Me.Label4)
@@ -123,6 +186,9 @@ Partial Class Form1
         Me.Controls.Add(Me.Label1)
         Me.Name = "Form1"
         Me.Text = "NRCAD Click"
+        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -137,4 +203,10 @@ Partial Class Form1
     Friend WithEvents Label4 As Label
     Friend WithEvents txtOnOff As TextBox
     Friend WithEvents lblStatus As Label
+    Friend WithEvents lblRemoteStatus As Label
+    Friend WithEvents lblStopDelay As Label
+    Friend WithEvents txtStopDelay As TextBox
+    Friend WithEvents chkAutoStop As CheckBox
+    Friend WithEvents FileSystemWatcher1 As IO.FileSystemWatcher
+    Friend WithEvents GroupBox1 As GroupBox
 End Class
